@@ -1,0 +1,14 @@
+/* export2word - 插件样式 */
+/* v1.0.0 */
+
+.export2word-recursion-setting {
+    padding-left: 1.5em;
+    border-left: 2px solid var(--interactive-accent);
+}
+
+.export2word-footer {
+    margin-top: 2em;
+    padding-top: 1em;
+    border-top: 1px solid var(--background-modifier-border);
+    opacity: 0.6;
+}
