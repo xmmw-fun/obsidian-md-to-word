@@ -11,7 +11,7 @@ const prod = process.argv.includes("production");
 const noSync = process.argv.includes("nosync");
 
 // Obsidian vault 插件部署目录
-const VAULT_PLUGIN_DIR = "E:/Obsidian/vault002-outup-others/.obsidian/plugins/export-to-word";
+const VAULT_PLUGIN_DIR = "E:/Obsidian/vault002-outup-others/.obsidian/plugins/md-to-word";
 
 // 上架审查整改（2026-09-29）：docx 只发布打包后的 dist（jszip/setimmediate 全部内联），
 // 内联的特性检测代码含 `document.createElement("script")` 字符串——社区审查静态扫描

@@ -1,10 +1,10 @@
 {
-  "id": "export-to-word",
-  "name": "Export to Word",
+  "id": "md-to-word",
+  "name": "MD to Word",
   "version": "1.0.1",
   "minAppVersion": "1.5.0",
   "description": "Export Obsidian notes to Word (.docx) with tables, images, syntax-highlighted code blocks, footnotes, task lists, and wikilink attachment bundles.",
   "author": "XMMW",
-  "authorUrl": "https://github.com/xmmw-fun/obsidian-export-to-word",
+  "authorUrl": "https://github.com/xmmw-fun/obsidian-md-to-word",
   "isDesktopOnly": false
 }

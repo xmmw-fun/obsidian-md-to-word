@@ -1,6 +1,6 @@
 <!-- 发版维护提醒：每次发版必须同步三处版本号 —— manifest.json 的 version、package.json 的 version、versions.json 追加一行 "新版本": "minAppVersion"；然后打同名 tag 的 GitHub Release 并上传 main.js / manifest.json / styles.css 三件套。README 只有功能/用法变化时才需要改。 -->
 
-# Export to Word
+# MD to Word
 
 一键将 Obsidian Markdown 笔记导出为 Word（.docx）文档，零外部依赖，桌面端与移动端均可使用。
 
@@ -21,15 +21,15 @@ Export Obsidian notes to Word (.docx) with one click. Zero external dependencies
 
 ## Installation / 安装
 
-**社区市场（审核通过后）**：在 Obsidian 设置 → 第三方插件 → 社区插件市场中搜索 "Export to Word" 安装。
+**社区市场（审核通过后）**：在 Obsidian 设置 → 第三方插件 → 社区插件市场中搜索 "MD to Word" 安装。
 
 **手动安装**：
 
-1. 从 [Releases](https://github.com/xmmw-fun/obsidian-export-to-word/releases) 下载 `main.js`、`manifest.json`、`styles.css`
-2. 放入 `<你的Vault>/.obsidian/plugins/export-to-word/` 目录
+1. 从 [Releases](https://github.com/xmmw-fun/obsidian-md-to-word/releases) 下载 `main.js`、`manifest.json`、`styles.css`
+2. 放入 `<你的Vault>/.obsidian/plugins/md-to-word/` 目录
 3. 在 Obsidian 设置 → 第三方插件中启用
 
-**BRAT 内测**：将 `xmmw-fun/obsidian-export-to-word` 添加到 BRAT 插件。
+**BRAT 内测**：将 `xmmw-fun/obsidian-md-to-word` 添加到 BRAT 插件。
 
 ## Usage / 使用
 
@@ -37,7 +37,7 @@ Export Obsidian notes to Word (.docx) with one click. Zero external dependencies
 - 左侧功能区图标（向下箭头文件图标）
 - 右键文件菜单：`导出为 Word (.docx)`
 - 右键文件夹菜单：`批量导出文件夹为 Word (.docx)`
-- 默认快捷键：未绑定，可在「设置 → 快捷键」中搜索 "Export to Word" 自行绑定（也可在插件设置中一键启用 Ctrl/Cmd+Shift+E）
+- 默认快捷键：未绑定，可在「设置 → 快捷键」中搜索 "MD to Word" 自行绑定（也可在插件设置中一键启用 Ctrl/Cmd+Shift+E）
 
 ## Settings / 设置
 

@@ -1,5 +1,5 @@
 /**
- * export2word — Obsidian 插件主入口
+ * md-to-word — Obsidian 插件主入口
  * v1.0.0
  *
  * 在 Obsidian 中一键将 .md 文件导出为 .docx
@@ -954,7 +954,7 @@ class Export2WordSettingTab extends PluginSettingTab {
         containerEl.createEl("div", {
             cls: "export2word-footer",
         }).createEl("p", {
-            text: `Export to Word v${this.plugin.manifest.version} · MIT License`,
+            text: `MD to Word v${this.plugin.manifest.version} · MIT License`,
             cls: "setting-item-description",
         });
     }

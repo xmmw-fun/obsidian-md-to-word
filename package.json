@@ -1,5 +1,5 @@
 {
-  "name": "obsidian-export-to-word",
+  "name": "obsidian-md-to-word",
   "version": "1.0.1",
   "description": "一键将 Obsidian Markdown 笔记导出为 Word (.docx) 文档，零外部依赖，全平台支持",
   "main": "main.js",
