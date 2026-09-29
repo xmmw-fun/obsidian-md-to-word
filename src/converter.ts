@@ -18,9 +18,19 @@ import hljs, { type HighlightResult } from "highlight.js";
 import { wikilinkPlugin } from "./wikilink-plugin";
 // @ts-ignore - markdown-it-footnote 无类型声明
 import footnotePlugin from "markdown-it-footnote";
-import type { App, Vault, TFile } from "obsidian";
-import { normalizePath, Platform, requestUrl } from "obsidian";
+import type { App, Vault } from "obsidian";
+import { normalizePath, Platform, requestUrl, TFile } from "obsidian";
 import type { WikilinkMode } from "./settings";
+
+/**
+ * getFileByPath 是 Obsidian 1.5.7 才引入的 API（@since 1.5.7），
+ * 而本插件声明 minAppVersion 1.5.0 —— 社区审查的 no-unsupported-api 会报 Error。
+ * 这里用古早就有的 getAbstractFileByPath + instanceof 实现等价语义。
+ */
+function getTFileByPath(vault: Vault, path: string): TFile | null {
+    const f = vault.getAbstractFileByPath(path);
+    return f instanceof TFile ? f : null;
+}
 
 // ============================================================
 // 类型定义
@@ -134,10 +144,10 @@ async function readImageAsBase64(
     path: string
 ): Promise<{ data: Uint8Array; format: string } | null> {
     try {
-        const file = vault.getFileByPath(path);
+        const file = getTFileByPath(vault, path);
         if (!file) {
             // 尝试去除 Obsidian 最短路径前缀
-            const altFile = vault.getFileByPath(path.replace(/^\.\//, ""));
+            const altFile = getTFileByPath(vault, path.replace(/^\.\//, ""));
             if (!altFile) return null;
             const buffer = await vault.readBinary(altFile);
             const ext = altFile.extension.toLowerCase();
@@ -281,7 +291,7 @@ async function loadEmbedImage(
         if (sourceFile && (clean.startsWith("./") || clean.startsWith("../"))) {
             const sourceDir = sourceFile.parent?.path ?? "";
             const absPath = normalizePath(`${sourceDir}/${clean}`);
-            const relFile = vault.getFileByPath(absPath);
+            const relFile = getTFileByPath(vault, absPath);
             if (relFile) {
                 const buffer = await vault.readBinary(relFile);
                 return {
@@ -385,13 +395,17 @@ async function convertImageToPng(
         const ratio = srcW > IMAGE_MAX_WIDTH ? IMAGE_MAX_WIDTH / srcW : 1;
         const drawW = Math.max(1, Math.round(srcW * ratio));
         const drawH = Math.max(1, Math.round(srcH * ratio));
-        const canvas = document.createElement("canvas");
+        const canvas = document.body.createEl("canvas");
         canvas.width = drawW;
         canvas.height = drawH;
         const c2d = canvas.getContext("2d");
-        if (!c2d) return null;
+        if (!c2d) {
+            canvas.remove();
+            return null;
+        }
         c2d.drawImage(img, 0, 0, drawW, drawH);
         const pngDataUrl = canvas.toDataURL("image/png");
+        canvas.remove();
         const pngBase64 = pngDataUrl.split(",")[1] || "";
         if (!pngBase64) return null;
         return { data: base64ToUint8Array(pngBase64), width: drawW, height: drawH };

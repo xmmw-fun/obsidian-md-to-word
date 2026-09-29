@@ -1,6 +1,6 @@
 {
   "name": "obsidian-md-to-word",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "一键将 Obsidian Markdown 笔记导出为 Word (.docx) 文档，零外部依赖，全平台支持",
   "main": "main.js",
   "scripts": {
@@ -21,13 +21,13 @@
   "dependencies": {
     "docx": "^9.0.0",
     "highlight.js": "^11.9.0",
+    "jszip": "^3.10.1",
     "markdown-it": "^14.1.0",
     "markdown-it-footnote": "^4.0.0"
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.0",
     "@types/node": "^20.14.0",
-    "builtin-modules": "^4.0.0",
     "esbuild": "^0.25.0",
     "obsidian": "^1.7.0",
     "tslib": "^2.6.0",

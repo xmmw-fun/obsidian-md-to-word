@@ -45,7 +45,6 @@ export default class Export2WordPlugin extends Plugin {
             name: "导出为 Word (.docx)",
             icon: "file-text",
             callback: () => this.exportCurrentFile(),
-            hotkeys: this.settings.enableHotkey ? [{ modifiers: ["Mod", "Shift"], key: "E" }] : undefined,
         });
 
         // ==========================================================
@@ -72,7 +71,7 @@ export default class Export2WordPlugin extends Plugin {
         // 功能区图标
         // ==========================================================
         this.addRibbonIcon("file-down", "导出为 Word", () => {
-            this.exportCurrentFile();
+            void this.exportCurrentFile();
         });
 
         // ==========================================================
@@ -690,9 +689,9 @@ export default class Export2WordPlugin extends Plugin {
 
         // 自动打开（仅单文件模式）
         if (openAfter) {
-            const newFile = this.app.vault.getFileByPath(finalPath);
-            if (newFile) {
-                await this.app.workspace.getLeaf(false).openFile(newFile);
+            const abstract = this.app.vault.getAbstractFileByPath(finalPath);
+            if (abstract instanceof TFile) {
+                await this.app.workspace.getLeaf(false).openFile(abstract);
             }
         }
     }
@@ -719,19 +718,17 @@ export default class Export2WordPlugin extends Plugin {
         });
 
         const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
+        const a = document.body.createEl("a", { cls: "md-to-word-download-hidden" });
         a.href = url;
         a.download = fileName;
-        a.style.display = "none";
-        document.body.appendChild(a);
         a.click();
 
-        setTimeout(() => {
-            document.body.removeChild(a);
+        window.setTimeout(() => {
+            a.remove();
             URL.revokeObjectURL(url);
         }, 100);
 
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => window.setTimeout(resolve, 500));
     }
 
     // ==========================================================
@@ -785,7 +782,7 @@ class FolderSuggestModal extends SuggestModal<string> {
     onChooseSuggestion(folderPath: string, _evt?: MouseEvent | KeyboardEvent): void {
         const folder = this.app.vault.getAbstractFileByPath(folderPath);
         if (folder instanceof TFolder) {
-            this.plugin.exportFolder(folder);
+            void this.plugin.exportFolder(folder);
         }
     }
 }
@@ -807,7 +804,7 @@ class Export2WordSettingTab extends PluginSettingTab {
         containerEl.empty();
 
         // 标题
-        containerEl.createEl("h2", { text: "export2word · 设置" });
+        new Setting(containerEl).setName("MD to Word").setHeading();
         containerEl.createEl("p", {
             text: "一键将 Obsidian Markdown 笔记导出为 Word (.docx) 文档",
             cls: "setting-item-description",
@@ -847,7 +844,7 @@ class Export2WordSettingTab extends PluginSettingTab {
             .setClass("export2word-recursion-setting");
 
         // 附件目录设置
-        containerEl.createEl("h3", { text: "附件目录" });
+        new Setting(containerEl).setName("附件目录").setHeading();
 
         new Setting(containerEl)
             .setName("导出时生成附件目录")
@@ -919,7 +916,7 @@ class Export2WordSettingTab extends PluginSettingTab {
         }
 
         // 批量导出设置
-        containerEl.createEl("h3", { text: "批量导出（文件夹）" });
+        new Setting(containerEl).setName("批量导出（文件夹）").setHeading();
 
         new Setting(containerEl)
             .setName("批量导出打包成一个 zip")
@@ -935,23 +932,16 @@ class Export2WordSettingTab extends PluginSettingTab {
                     });
             });
 
-        // 快捷键设置
-        containerEl.createEl("h3", { text: "快捷键" });
+        // 快捷键说明（社区规范不允许默认热键，请用户在 Obsidian 快捷键设置中自行绑定）
+        new Setting(containerEl).setName("快捷键").setHeading();
 
         new Setting(containerEl)
-            .setName("启用导出快捷键")
-            .setDesc("开启后，按 Ctrl/Cmd+Shift+E 快速导出当前文件。关闭后可在 Obsidian「设置→快捷键」中自定义。")
-            .addToggle((toggle) => {
-                toggle
-                    .setValue(this.plugin.settings.enableHotkey)
-                    .onChange(async (value) => {
-                        this.plugin.settings.enableHotkey = value;
-                        await this.plugin.saveSettings();
-                    });
-            });
+            .setName("绑定导出快捷键")
+            .setDesc("本插件不设置默认热键。如需快捷键，请在 Obsidian「设置 → 快捷键」中搜索「导出为 Word」自行绑定。")
+            .setDisabled(true);
 
         // 版本信息
-        containerEl.createEl("div", {
+        containerEl.createDiv({
             cls: "export2word-footer",
         }).createEl("p", {
             text: `MD to Word v${this.plugin.manifest.version} · MIT License`,

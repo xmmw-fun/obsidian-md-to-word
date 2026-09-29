@@ -3,12 +3,15 @@ import { copyFileSync, mkdirSync, readFileSync } from "fs";
 import process from "process";
 import { join, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
-import builtins from "builtin-modules";
+import { builtinModules } from "module";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const prod = process.argv.includes("production");
 const noSync = process.argv.includes("nosync");
+
+// Node 内置模块列表（替代 builtin-modules 包，社区审查建议直接用 node:module）
+const builtins = [...builtinModules, ...builtinModules.map((m) => `node:${m}`)];
 
 // Obsidian vault 插件部署目录
 const VAULT_PLUGIN_DIR = "E:/Obsidian/vault002-outup-others/.obsidian/plugins/md-to-word";

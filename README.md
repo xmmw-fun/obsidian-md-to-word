@@ -2,68 +2,77 @@
 
 # MD to Word
 
-一键将 Obsidian Markdown 笔记导出为 Word（.docx）文档，零外部依赖，桌面端与移动端均可使用。
+**Export your notes to Word (.docx) with one click.** Full Markdown rendering — tables, embedded images, syntax-highlighted code blocks, footnotes, task lists, and wikilink attachment bundles. Zero external dependencies. Works on desktop and mobile.
 
-Export Obsidian notes to Word (.docx) with one click. Zero external dependencies. Works on desktop and mobile.
+一键将笔记导出为 Word（.docx）。完整 Markdown 渲染，零外部依赖，桌面端与移动端均可用。
 
-## Features / 功能特性
+## Features
 
-- **完整的 Markdown 渲染**：标题层级、加粗/斜体/行内代码、有序/无序列表、引用块、分隔线
-- **表格**：按内容自适应列宽，表头底色 + 斑马纹 + 细灰边框 + 单元格对齐
-- **图片嵌入**：支持 `![[image.png]]`（含子目录与 `../` 相对路径）、标准 Markdown `![](path)`（含中文文件名）、网络图片；超出页宽自动等比缩放
-- **代码块语法高亮**：token 级着色（关键字/字符串/注释/数字等），连续灰底代码块样式
-- **脚注**：`[^label]` 语法导出为 Word 原生脚注
-- **待办事项**：`- [ ]` / `- [x]` 渲染为带颜色的勾选符号
-- **Wikilink 处理**：纯文本模式，或「附件打包」模式——将关联笔记递归导出并连同主文档一起打包为 .zip，自动编号并生成附件目录
-- **批量导出**：右键文件夹即可批量导出整个文件夹为 .docx（可选合并为一个 .zip）
-- **导出路径可选**：Vault 根目录 `_exports`、源文件所在目录，或自定义路径
-- **全平台**：不依赖 Node/Electron API，桌面端与移动端均可导出
+- **Complete Markdown rendering**: heading hierarchy, bold/italic/inline code, ordered/unordered lists, blockquotes, horizontal rules
+- **Tables**: content-based autofit column widths, shaded header, zebra striping, thin gray borders, per-column alignment
+- **Images**: `![[image.png]]` (including subfolders and `../` relative paths), standard Markdown `![](path)` (including non-ASCII file names), and remote images over HTTPS; auto-scaled to page width
+- **Syntax highlighting**: token-level colors for code blocks (keywords, strings, comments, numbers) in a continuous shaded code block
+- **Footnotes**: `[^label]` exported as native Word footnotes
+- **Task lists**: `- [ ]` / `- [x]` rendered as colored check symbols
+- **Wikilinks**: plain-text mode, or attachment-bundle mode — recursively export linked notes and pack everything into a numbered `.zip` with an attachment index
+- **Batch export**: right-click a folder to export all its notes (optionally merged into a single `.zip`)
+- **Export location**: `_exports` folder, source-note folder, or a custom path
+- **Cross-platform**: no Node/Electron APIs — desktop and mobile
 
-## Installation / 安装
+## Installation
 
-**社区市场（审核通过后）**：在 Obsidian 设置 → 第三方插件 → 社区插件市场中搜索 "MD to Word" 安装。
+**Community plugin directory** (once approved): Settings → Community plugins → Browse → search "MD to Word".
 
-**手动安装**：
+**Manual**:
 
-1. 从 [Releases](https://github.com/xmmw-fun/obsidian-md-to-word/releases) 下载 `main.js`、`manifest.json`、`styles.css`
-2. 放入 `<你的Vault>/.obsidian/plugins/md-to-word/` 目录
-3. 在 Obsidian 设置 → 第三方插件中启用
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/xmmw-fun/obsidian-md-to-word/releases/latest)
+2. Copy them into `<YourVault>/.obsidian/plugins/md-to-word/`
+3. Enable "MD to Word" under Settings → Community plugins
 
-**BRAT 内测**：将 `xmmw-fun/obsidian-md-to-word` 添加到 BRAT 插件。
+**Beta via BRAT**: add `xmmw-fun/obsidian-md-to-word` to the BRAT plugin.
 
-## Usage / 使用
+## Usage
 
-- 命令面板：`Export to Word: 导出为 Word (.docx)`
-- 左侧功能区图标（向下箭头文件图标）
-- 右键文件菜单：`导出为 Word (.docx)`
-- 右键文件夹菜单：`批量导出文件夹为 Word (.docx)`
-- 默认快捷键：未绑定，可在「设置 → 快捷键」中搜索 "MD to Word" 自行绑定（也可在插件设置中一键启用 Ctrl/Cmd+Shift+E）
+- Command palette: `MD to Word: 导出为 Word (.docx)`
+- Ribbon icon (file-down arrow on the left sidebar)
+- File menu: right-click a note → `导出为 Word (.docx)`
+- Folder menu: right-click a folder → `批量导出文件夹为 Word (.docx)`
+- Hotkey: none by default — bind one in Settings → Hotkeys by searching "导出为 Word"
 
-## Settings / 设置
+## Settings
 
-| 设置项 | 说明 |
-|--------|------|
-| Wikilink 处理方式 | 纯文本 / 附件打包（.zip，含递归深度 0–3 层） |
-| 导出路径 | `_exports` 目录 / 源文件所在目录 / 自定义路径 |
-| 批量导出为单个 .zip | 批量导出时合并打包 |
-| 附件目录 | 在 zip 模式下列出关联文档层级清单 |
-| 启用导出快捷键 | 开启后按 Ctrl/Cmd+Shift+E 导出当前文件 |
+| Setting | Description |
+|---------|-------------|
+| Wikilink mode | Plain text / Attachment bundle (.zip, recursion depth 0–3) |
+| Export path | `_exports` folder / source-note folder / custom path |
+| Batch export as single .zip | Merge batch results into one archive |
+| Attachment index | List linked documents hierarchically in zip mode |
 
-## Network Requests / 网络请求说明
+## Network requests
 
-本插件唯一的网络行为：当笔记引用**网络图片**（`![](https://...)`）时，导出过程中会通过 Obsidian 官方 `requestUrl` API 下载该图片以嵌入 .docx。除此之外没有任何网络请求、没有遥测、没有远程代码。
+This plugin makes network requests in exactly one case: when a note references a **remote image** (`![](https://...)`), the image is downloaded via Obsidian's official `requestUrl` API during export so it can be embedded in the .docx. There is no other network activity, no telemetry, and no remote code execution.
 
-## Tech Stack / 技术路线
+## Tech stack
 
 TypeScript · [docx.js](https://docx.js.org/) · markdown-it · highlight.js · jszip
 
-## Roadmap / 路线图
+## Roadmap
 
-- [ ] 自定义 .docx 模板
-- [ ] 导出前智能检查（损坏链接 / 缺失图片提示）
-- [ ] LaTeX 公式导出
-- [ ] 超链接模式（Wikilink 导出为可点击链接，研究中）
-- [ ] UI 国际化
+- Custom .docx templates
+- Pre-export health check (broken links / missing images)
+- LaTeX equation export
+- Clickable wikilink mode (under investigation)
+- UI translations
+
+## 中文说明
+
+**MD to Word** 是一键把笔记导出成 Word 文档的插件：
+
+- 表格自适应列宽、斑马纹；代码块语法高亮；脚注转为 Word 原生脚注；`- [ ]` 待办渲染为勾选符号
+- 图片全格式支持：Obsidian 附件 `![[图.png]]`（含 `../` 相对路径）、Markdown 图片（含中文文件名）、网络图片
+- Wikilink 两种模式：纯文本，或「附件打包」——递归导出关联笔记打成带编号和目录的 .zip
+- 右键文件夹可批量导出；导出路径可选 `_exports` / 源文件目录 / 自定义
+- 无默认热键，可在「设置 → 快捷键」中搜索「导出为 Word」自行绑定
 
 ## License
 

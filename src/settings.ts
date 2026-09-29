@@ -18,8 +18,6 @@ export interface Export2WordSettings {
     attachmentIndexEnabled: boolean;
     /** 附件目录位置：end = 追加到主文档末尾；separate = 单独生成一个「附件目录.docx」 */
     attachmentIndexLocation: "end" | "separate";
-    /** 是否启用默认快捷键（Ctrl/Cmd+Shift+E 导出当前文件）。默认关闭，避免与社区规范冲突 */
-    enableHotkey: boolean;
 }
 
 export const DEFAULT_SETTINGS: Export2WordSettings = {
@@ -29,5 +27,4 @@ export const DEFAULT_SETTINGS: Export2WordSettings = {
     batchZipMode: false,
     attachmentIndexEnabled: false,
     attachmentIndexLocation: "end",
-    enableHotkey: false,
 };
