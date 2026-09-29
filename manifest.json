@@ -1,7 +1,7 @@
 {
   "id": "md-to-word",
   "name": "MD to Word",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "minAppVersion": "1.5.0",
   "description": "Export notes to Word (.docx) with tables, images, syntax-highlighted code blocks, footnotes, task lists, and wikilink attachment bundles.",
   "author": "XMMW",

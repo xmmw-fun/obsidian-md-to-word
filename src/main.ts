@@ -803,8 +803,8 @@ class Export2WordSettingTab extends PluginSettingTab {
         const { containerEl } = this;
         containerEl.empty();
 
-        // 标题
-        new Setting(containerEl).setName("MD to Word").setHeading();
+        // 标题（社区规范：设置面板标题不得包含插件名——左侧导航已显示）
+        new Setting(containerEl).setName("导出选项").setHeading();
         containerEl.createEl("p", {
             text: "一键将 Obsidian Markdown 笔记导出为 Word (.docx) 文档",
             cls: "setting-item-description",
